@@ -156,7 +156,7 @@ public class StrString {
             return  strMatchHandlePointAndStar(str,pattern.substring(2)) ||
                     (firstMatch && strMatchHandlePointAndStar(oneTime,pattern));
         } else {
-            return  strMatchHandlePointAndStar(str.substring(1), pattern.substring(1));
+            return firstMatch &&  strMatchHandlePointAndStar(str.substring(1), pattern.substring(1));
         }
     }
 
@@ -194,8 +194,8 @@ public class StrString {
         result =  strString.strMatchHandlePoint("shanjunwei","shan.unwei");
         Assert.assertEquals(true, result);
 
-        result =  strString.strMatchHandlePointAndStar("shanjunwei","shan.*wei");
-        Assert.assertEquals(true, result);
+        result =  strString.strMatchHandlePointAndStar("aab","c*a*b");
+        Assert.assertEquals(false, result);
     }
 
 }
