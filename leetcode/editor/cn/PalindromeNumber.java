@@ -30,6 +30,9 @@ package editor.cn;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  测试修改
+ */
 public class PalindromeNumber {
     public static void main(String[] args) {
         Solution solution = new PalindromeNumber().new Solution();
