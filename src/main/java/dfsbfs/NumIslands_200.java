@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 /**
  * 岛屿数量
+ * 当前版本存在重复计算的问题
  */
 public class NumIslands_200 {
     public static void main(String[] args) {
