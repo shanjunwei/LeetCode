@@ -1,15 +1,12 @@
 package dfsbfs;
 
 import javafx.util.Pair;
+import unionset.UnionFind;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 岛屿数量
- * 当前版本存在重复计算的问题
  */
 public class NumIslands_200 {
     public static void main(String[] args) {
@@ -24,10 +21,8 @@ public class NumIslands_200 {
         NumIslands_200 bfsSolution = new NumIslands_200();
         System.out.println(bfsSolution.numIslands(grid));
     }
-
-
-    //  广度优先搜索实现 队列 力扣提交
-    public int numIslands2(char[][] grid) {
+    //  广度优先搜索实现 队列 力扣ac通过
+    public int numIslands1(char[][] grid) {
         int result = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -69,8 +64,8 @@ public class NumIslands_200 {
         }
         return result;
     }
-    // 深度优先搜索实现  栈
-    public int numIslands(char[][] grid) {
+    // 深度优先搜索实现  栈  力扣ac通过
+    public int numIslands2(char[][] grid) {
         int result = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -111,4 +106,50 @@ public class NumIslands_200 {
         }
         return result;
     }
+    // 并查集实现 岛屿数量 未完待续
+    public static class Node {
+        Pair<Integer,Integer>  data;
+        public Node(int row, int col) {
+            this.data = new Pair<>(row,col);
+        }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Node)) return false;
+            Node node = (Node) o;
+            return Objects.equals(data, node.data);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(data);
+        }
+    }
+    private HashMap<Node, Node> fatherMap = new HashMap<>();  //  k->v k和v在同一个集合
+    public int numIslands(char[][] grid) {
+        int result = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                char seed = grid[i][j];
+                if (seed == '1') {
+                    int row = i, col = j;
+                    // 自个组团
+                    Node node = new Node(row, col);
+                    fatherMap.put(node, node);  // 每个节点指向自己
+                    // 上
+                    if (row - 1 >= 0 && grid[row - 1][col] == '1') {
+                        fatherMap.put(node, new Node(row - 1, col));
+                    }
+                    // 左
+                    if (col - 1 >= 0 && grid[row][col - 1] == '1') {
+                        fatherMap.put(node, new Node(row, col - 1));
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+
+
 }
